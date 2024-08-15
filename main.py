@@ -1,12 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
 
-r = requests.get('https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/')
+link = str(input('paste steam link '))
 
-
-print(r)
-
+r = requests.get(link)
 
 soup = BeautifulSoup(r.content, 'html.parser')
 
 s = soup.find('div', class_='discount_final_price')
+
+if s == None:
+    s = soup.find('div', class_='game_purchase_price price')
+
+s = s.prettify()
+
+price = s.splitlines()[1]
+
+print(price)
